@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class Controller {
+public class EmployeeController {
     private final EmployeeService empService;
     @PostMapping("/createEmp")
     public String createEmp(@RequestParam String username){

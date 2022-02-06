@@ -3,23 +3,23 @@ package employees.employee.services;
 import employees.employee.model.Employee;
 import employees.employee.model.Registry;
 import employees.employee.repositories.EmployeeRepository;
+import employees.employee.repositories.RegistryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.UUID;
 @Transactional
 @RequiredArgsConstructor
+@Service
 public class EmployeeService {
 
     private final EmployeeRepository empRepo;
+    private final RegistryRepository regRepo;
 
     public String createEmployee(String username){
         String code = UUID.randomUUID().toString();
-        Employee emp = new Employee(username, code);
+        Employee emp = new Employee(username, code, false);
         empRepo.save(emp);
         return emp.getUsername();
     }
@@ -28,19 +28,4 @@ public class EmployeeService {
         return empRepo.findByUsername(username);
     }
 
-    public String updateRegistry(String code){
-        Employee emp = empRepo.findByCode(code);
-        String inOut;
-        if (!emp.getIsHere()){
-            inOut = "Arrived";
-            emp.setIsHere(true);
-        } else {
-            inOut ="Left";
-            emp.setIsHere(false);
-        }
-
-        Registry reg = new Registry(emp.getUsername(), LocalDateTime.now(), inOut);
-
-        return "asd";
-    }
 }

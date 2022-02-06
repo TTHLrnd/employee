@@ -18,9 +18,9 @@ public class Employee  {
     private String code;
     private Boolean isHere = false;
 
-
-    public Employee(String username, String code) {
+    public Employee(String username, String code, Boolean isHere) {
         this.username = username;
         this.code = code;
+        this.isHere = isHere;
     }
 }
